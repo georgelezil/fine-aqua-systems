@@ -1,0 +1,97 @@
+<form #noteForm="ngForm" (ngSubmit)="submit(noteForm)" >
+    <div class="form-group">
+        <label for="">Template Driven Form</label>
+    </div>
+    <div ngModelGroup="contact" #contact="ngModelGroup">
+        <div>Form is Valid :  {{ contact.valid }}</div>
+        <div>Form is Dirty :  {{ contact.dirty }}</div>
+        <div>Form Data :  {{ contact.value | json }}</div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input required ngModel name="firstName" #firstName="ngModel" minlength="2" maxlength="30" id="firstName" type="text" class="form-control" (change)="log(firstName)" pattern="TEST">
+            <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+                <div *ngIf="null != firstName.errors && null != firstName.errors.required ">First name is empty</div>
+                <div *ngIf="null != firstName.errors && firstName.errors.minlength">First name should be {{firstName.errors.minlength.requiredLength}} charecters</div>
+                <div *ngIf="null != firstName.errors && firstName.errors.pattern">First name doesn't match the pattern</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input required ngModel name="lastName" #lastName="ngModel" id="lastName" type="text" class="form-control" minlength="2" maxlength="30" (change)="log(lastName)">
+            <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">Last name is empty</div>
+        </div>
+     
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <textarea required ngModel #subject="ngModel" name="subject" id="subject" #comment="ngModel" cols="30" rows="10"
+                class="form-control" (change)="log(subject)"></textarea>
+                <div class="alert alert-danger" *ngIf="subject.touched && !subject.valid">Subject is empty</div>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ngModel name="isSubscribed" id="isSubscribed"> Subscribe to the mailing list
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="contactMethod1"></label>
+            <select ngModel name="contactMethod1" id="contactMethod1" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.name }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contactMethod2"></label>
+            <select ngModel name="contactMethod2" id="contactMethod2" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let method of contactMethods" [ngValue]="method">{{ method.name }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contactMethod3"></label>
+            <select multiple ngModel name="contactMethod3" id="contactMethod3" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.name }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contactMethod4"></label>
+            <select multiple ngModel name="contactMethod4" id="contactMethod4" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let method of contactMethods" [ngValue]="method">{{ method.name }}</option>
+            </select>
+        </div>
+
+        <div class="radio">
+            <label>
+                <input ngModel type="radio" name="contactMethod5" value="1"> EMAIL 
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input ngModel type="radio" name="contactMethod5" value="2"> MOB
+            </label>
+        </div>
+
+        <div *ngFor="let method of contactMethods" class="radio">
+            <label>
+                <input ngModel   type="radio" name="contactMethod6" [value]="method.id"> {{ method.name }} 
+            </label>
+        </div>
+
+
+    </div>
+    
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea required ngModel name="comment" id="comment" #comment="ngModel" cols="30" rows="10"
+            class="form-control" (change)="log(comment)"></textarea>
+            <div class="alert alert-danger" *ngIf="comment.touched && !comment.valid">Comment is empty</div>
+    </div>
+    <button class="btn btn-primary" [disabled]="!noteForm.valid">Submit</button>
+
+</form>
